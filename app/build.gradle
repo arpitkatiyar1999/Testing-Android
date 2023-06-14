@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.dagger.hilt.android'
 }
 
 android {
@@ -14,10 +15,14 @@ android {
         targetSdk 33
         versionCode 1
         versionName "1.0"
-
+        //add the api key in gradle.properties then rebuild the project
+        buildConfigField("String", "API_KEY", API_KEY)
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
-
+    //to rectify error related to build config
+    buildFeatures {
+        buildConfig = true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -39,6 +44,7 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    //to rectify file missing error
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.1"
     //Room
@@ -47,6 +53,14 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation 'androidx.room:room-ktx:2.5.1'
+    //retrofit
+    def retrofit_version="2.9.0"
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version)"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+    //dagger-hilt
+    implementation "com.google.dagger:hilt-android:2.44"
+    kapt "com.google.dagger:hilt-compiler:2.44"
+
 
 
     testImplementation 'junit:junit:4.13.2'
