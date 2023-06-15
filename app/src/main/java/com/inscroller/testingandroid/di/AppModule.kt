@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.inscroller.testingandroid.data.local.ShoppingDatabase
 import com.inscroller.testingandroid.data.remote.ApiInterface
+import com.inscroller.testingandroid.repo.ShoppingRepo
+import com.inscroller.testingandroid.repo.ShoppingRepoImpl
 import com.inscroller.testingandroid.utils.Constants
 import dagger.Module
 import dagger.Provides
@@ -18,21 +20,27 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class AppModule {
 
+
+    @Provides
+    @Singleton
+    fun provideShoppingRepo(shoppingRepoImpl: ShoppingRepoImpl): ShoppingRepo = shoppingRepoImpl
+
     @Provides
     @Singleton
     fun provideContext(@ApplicationContext context: Context): Context = context
 
     @Singleton
     @Provides
-    fun provideShoppingDatabase(context: Context): ShoppingDatabase =
-        Room.databaseBuilder(context, ShoppingDatabase::class.java, Constants.DATABASE_NAME).build()
+    fun provideShoppingDatabase(context: Context): ShoppingDatabase = Room
+        .databaseBuilder(context, ShoppingDatabase::class.java, Constants.DATABASE_NAME)
+        .build()
 
     @Singleton
     @Provides
-    fun providePixabayApi(): ApiInterface =
-        Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(Constants.PIXABAY_BASE_URL)
-            .build()
-            .create(ApiInterface::class.java)
+    fun providePixabayApi(): ApiInterface = Retrofit
+        .Builder()
+        .addConverterFactory(GsonConverterFactory.create())
+        .baseUrl(Constants.PIXABAY_BASE_URL)
+        .build()
+        .create(ApiInterface::class.java)
 }

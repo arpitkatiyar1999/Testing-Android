@@ -22,6 +22,7 @@ android {
     //to rectify error related to build config
     buildFeatures {
         buildConfig = true
+        viewBinding true
     }
     buildTypes {
         release {
@@ -54,12 +55,14 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
     implementation 'androidx.room:room-ktx:2.5.1'
     //retrofit
-    def retrofit_version="2.9.0"
+    def retrofit_version = "2.9.0"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version)"
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     //dagger-hilt
     implementation "com.google.dagger:hilt-android:2.44"
     kapt "com.google.dagger:hilt-compiler:2.44"
+    //viewModelScope dependency
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
 
 
 
